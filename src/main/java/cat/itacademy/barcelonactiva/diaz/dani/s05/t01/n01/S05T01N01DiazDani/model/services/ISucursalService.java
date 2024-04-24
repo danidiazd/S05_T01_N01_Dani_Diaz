@@ -8,10 +8,15 @@ import java.util.List;
 public interface ISucursalService {
 
     SucursalDTO addSucursal(Sucursal sucursal);
+
     SucursalDTO updateSucursal(Sucursal sucursal);
+
     boolean deleteSucursal(Integer id);
+
     SucursalDTO getOneSucursalDTO(Integer id);
+
     Sucursal getOneSucursal(Integer id);
+
     List<SucursalDTO> getAllSucursal();
 
 }

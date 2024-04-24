@@ -3,10 +3,12 @@ package cat.itacademy.barcelonactiva.diaz.dani.s05.t01.n01.S05T01N01DiazDani.mod
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.io.Serializable;
+
 
 @Entity
 @Table(name = "sucursal")
-public class Sucursal {
+public class Sucursal implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,9 +4,13 @@ import cat.itacademy.barcelonactiva.diaz.dani.s05.t01.n01.S05T01N01DiazDani.mode
 import cat.itacademy.barcelonactiva.diaz.dani.s05.t01.n01.S05T01N01DiazDani.model.dto.SucursalDTO;
 import cat.itacademy.barcelonactiva.diaz.dani.s05.t01.n01.S05T01N01DiazDani.model.repository.SucursalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+
+@Service
 public class SucursalService implements ISucursalService {
 
 
@@ -20,31 +24,48 @@ public class SucursalService implements ISucursalService {
 
     @Override
     public SucursalDTO updateSucursal(Sucursal sucursal) {
-        return null;
+        Optional<Sucursal> optionalSucursal = sucursalRepository.findById(sucursal.getPk_SucursalId());
+        if (optionalSucursal.isPresent()) {
+            Sucursal updateSucursal = optionalSucursal.get();
+            updateSucursal.setPk_SucursalId(sucursal.getPk_SucursalId());
+            updateSucursal.setNameSucursal(sucursal.getNameSucursal());
+            updateSucursal.setNameCountry(sucursal.getNameCountry());
+            return convertToDTO(sucursalRepository.save(updateSucursal));
+        } else {
+            throw new RuntimeException("No encontrado con ID: " + sucursal.getPk_SucursalId());
+        }
     }
 
     @Override
     public boolean deleteSucursal(Integer id) {
-        return false;
+        Optional<Sucursal> optionalSucursal = sucursalRepository.findById(id);
+        if (optionalSucursal.isPresent()) {
+            sucursalRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public SucursalDTO getOneSucursalDTO(Integer id) {
-        return null;
+        return convertToDTO(sucursalRepository.findById(id).orElse(null));
     }
 
     @Override
     public Sucursal getOneSucursal(Integer id) {
-        return null;
+     return sucursalRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<SucursalDTO> getAllSucursal() {
-        return null;
+        List<Sucursal> sucursalList = sucursalRepository.findAll();
+        List<SucursalDTO> sucursalDTOList = sucursalList.stream().map(this::convertToDTO).toList();
+        return sucursalDTOList;
     }
 
 
-    private SucursalDTO convertToDTO(Sucursal sucursal){
+    private SucursalDTO convertToDTO(Sucursal sucursal) {
         return new SucursalDTO(sucursal.getPk_SucursalId(), sucursal.getNameSucursal(), sucursal.getNameCountry());
     }
 }
