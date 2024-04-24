@@ -24,6 +24,11 @@ public class Sucursal implements Serializable {
 
     public Sucursal(){}
 
+    public Sucursal(String nameSucursal, String nameCountry) {
+        this.nameSucursal = nameSucursal;
+        this.nameCountry = nameCountry;
+    }
+
     public Integer getPk_SucursalId() {
         return pk_SucursalId;
     }

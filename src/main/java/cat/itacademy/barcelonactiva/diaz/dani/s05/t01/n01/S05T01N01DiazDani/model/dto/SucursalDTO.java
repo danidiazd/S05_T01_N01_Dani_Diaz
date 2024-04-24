@@ -22,6 +22,10 @@ public class SucursalDTO {
         this.typeSucursal = checkCountry(countryName);
     }
 
+    public SucursalDTO() {
+
+    }
+
     public Integer getPk_SucursalID() {
         return pk_SucursalID;
     }
