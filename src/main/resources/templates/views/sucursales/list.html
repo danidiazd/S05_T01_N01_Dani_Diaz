@@ -19,11 +19,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="su:${sucursal}">
-            <th scope="row" th:text="${su.pk_SucursalId}"></th>
-            <td th:text="${su.nameSucursal}"></td>
-            <td th:text="${su.nameCountry}"></td>
-            <td th:text="${su.typeSucursal}"></td>
+        <tr th:each="su:${sucursales}">
+            <th scope="row" th:text="${su.pk_SucursalID}"></th>
+            <td th:text="${su.sucursalName}"></td>
+            <td th:text="${su.countryName}"></td>
+            <td th:text="${su.checkCountry}"></td>
         </tr>
         </tbody>
     </table>

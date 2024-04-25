@@ -22,7 +22,7 @@ public class SucursalController {
     @Autowired
     SucursalService sucursalService;
 
-    @GetMapping("/")
+    @GetMapping({"/", ""})
     String listSucursal(Model model) {
         List<SucursalDTO> list = sucursalService.getAllSucursal();
         model.addAttribute("titulo", "Lista Sucursales");
@@ -34,7 +34,7 @@ public class SucursalController {
     public String addSucursal(Model model) {
 
         Sucursal sucursal = new Sucursal();
-        List<CountryWorld> countryWorldList = Arrays.stream(CountryWorld.values()).toList()
+        List<CountryWorld> countryWorldList = Arrays.stream(CountryWorld.values()).toList();
         model.addAttribute("titulo", "Agregar Sucursal");
         model.addAttribute("paises", countryWorldList);
         model.addAttribute("sucursal", sucursal);
