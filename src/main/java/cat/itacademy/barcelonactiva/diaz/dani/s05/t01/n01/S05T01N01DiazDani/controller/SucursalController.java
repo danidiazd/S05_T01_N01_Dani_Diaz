@@ -5,11 +5,13 @@ import cat.itacademy.barcelonactiva.diaz.dani.s05.t01.n01.S05T01N01DiazDani.mode
 import cat.itacademy.barcelonactiva.diaz.dani.s05.t01.n01.S05T01N01DiazDani.model.dto.CountryWorld;
 import cat.itacademy.barcelonactiva.diaz.dani.s05.t01.n01.S05T01N01DiazDani.model.dto.SucursalDTO;
 import cat.itacademy.barcelonactiva.diaz.dani.s05.t01.n01.S05T01N01DiazDani.model.services.SucursalService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,15 +25,15 @@ public class SucursalController {
     SucursalService sucursalService;
 
     @GetMapping({"/", ""})
-    String listSucursal(Model model) {
+    public String listSucursal(Model model) {
         List<SucursalDTO> list = sucursalService.getAllSucursal();
         model.addAttribute("titulo", "Lista Sucursales");
         model.addAttribute("sucursales", list);
-        return "/views/sucursales/list";
+        return "views/sucursales/list";
     }
 
     @GetMapping("/add")
-    public String addSucursal(Model model) {
+    public String newSucursal(Model model) {
 
         Sucursal sucursal = new Sucursal();
         List<CountryWorld> countryWorldList = Arrays.stream(CountryWorld.values()).toList();
@@ -41,5 +43,43 @@ public class SucursalController {
 
         return "/views/sucursales/add";
     }
+
+    @PostMapping("/add")
+    public ModelAndView addSucursal(@Valid @ModelAttribute Sucursal sucursal, BindingResult result, Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("sucursal", new Sucursal());
+            model.addAttribute("error", "Se necesitan todos los campos");
+            return new ModelAndView("/views/sucursales/add", model.asMap());
+        } else {
+            SucursalDTO sucursalDTO = sucursalService.addSucursal(sucursal);
+            return new ModelAndView("redirect:/views/sucursales/list", model.asMap());
+        }
+    }
+
+    @GetMapping("/update/{id}")
+    public ModelAndView showUpdateSucarsal(@PathVariable("id") Integer sucursalId, Model model) {
+        model.addAttribute("sucursal", sucursalService.getOneSucursal(sucursalId));
+        String updateUrl = "/sucursales/update" + sucursalId;
+        model.addAttribute("updateUrl", updateUrl);
+        return new ModelAndView("views/sucursales/update", model.asMap());
+    }
+
+    @PostMapping("/update/{id}")
+    public ModelAndView updateSucursal(@Valid @ModelAttribute Sucursal sucursal,
+                 BindingResult result, @PathVariable("id") Integer sucursalId, Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("error", "Se necesitan todos los campos");
+            return new ModelAndView("views/sucursales/update", model.asMap());
+        } else {
+            sucursalService.updateSucursal(sucursal);
+            return new ModelAndView("redirect:/views/sucursales/list", model.asMap());
+        }
+    }
+
+
+
+
 
 }

@@ -58,7 +58,7 @@ public class SucursalDTO {
         this.typeSucursal = typeSucursal;
     }
 
-    private String checkCountry(String countryOffice) {
+    public String checkCountry(String countryOffice) {
         for (CountryEU country : CountryEU.values()) {
             if (countryOffice.equalsIgnoreCase(country.name())) {
                 return "EU";
