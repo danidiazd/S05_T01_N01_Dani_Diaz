@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="plantilla/template :: head"></head>
+<head th:replace="plantilla/template :: head">
+</head>
 <body>
 <header th:replace="plantilla/template :: header"></header>
 <div class="container">
@@ -9,9 +10,12 @@
         <div class="card-body">
             <form th:object="${sucursal}" th:action="@{/views/sucursales/add}" method="post">
                 <div class="form-group row">
+                    <input type="hidden" th:field="*{pk_SucursalId}">
                     <label class="col-md-2" for="nameSucursal">Nombres</label>
-                    <input type="text" th:field="*{nameSucursal}" class="form-control form-control-sm col-md-6" id="nameSucursal" placeholder="Nombres de Sucursales">
-                    <small></small>
+                    <input type="text" th:field="*{nameSucursal}" class="form-control form-control-sm col-md-4"
+                           id="nameSucursal" placeholder="Nombres de Sucursales" required>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('nameSucursal')}"
+                           th:errors="*{nameSucursal}"></small>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-2" for="nameCountry">País</label>
@@ -20,7 +24,7 @@
                     </select>
                 </div>
                 <div class="card-footer bg-dark">
-                    <input type="submit" class="btn btn-primary btn-sm" value="Guardar" />
+                    <input type="submit" class="btn btn-primary btn-sm" value="Guardar"/>
                 </div>
             </form>
         </div>

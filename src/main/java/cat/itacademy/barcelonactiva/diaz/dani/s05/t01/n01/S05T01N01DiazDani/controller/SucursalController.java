@@ -41,42 +41,41 @@ public class SucursalController {
         model.addAttribute("paises", countryWorldList);
         model.addAttribute("sucursal", sucursal);
 
-        return "/views/sucursales/add";
+        return "views/sucursales/add";
     }
 
     @PostMapping("/add")
-    public ModelAndView addSucursal(@Valid @ModelAttribute Sucursal sucursal, BindingResult result, Model model) {
-
+    public String addSucursal(@Valid @ModelAttribute Sucursal sucursal, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("sucursal", new Sucursal());
-            model.addAttribute("error", "Se necesitan todos los campos");
-            return new ModelAndView("/views/sucursales/add", model.asMap());
+            model.addAttribute("error", "El campo del nombre tiene que estar rellenado.");
+            return "views/sucursales/add";
         } else {
-            SucursalDTO sucursalDTO = sucursalService.addSucursal(sucursal);
-            return new ModelAndView("redirect:/views/sucursales/list", model.asMap());
+            SucursalDTO sucursalDTO = sucursalService.updateSucursal(sucursal);
+            return "redirect:/views/sucursales/";
         }
     }
 
-    @GetMapping("/update/{id}")
-    public ModelAndView showUpdateSucarsal(@PathVariable("id") Integer sucursalId, Model model) {
-        model.addAttribute("sucursal", sucursalService.getOneSucursal(sucursalId));
-        String updateUrl = "/sucursales/update" + sucursalId;
-        model.addAttribute("updateUrl", updateUrl);
-        return new ModelAndView("views/sucursales/update", model.asMap());
+
+    @GetMapping("/edit/{id}")
+    public String updateSucarsal(@PathVariable("id") Integer sucursalId, Model model) {
+
+        Sucursal sucursal = sucursalService.getOneSucursal(sucursalId);
+        List<CountryWorld> countryWorldList = Arrays.stream(CountryWorld.values()).toList();
+
+        model.addAttribute("titulo", "Editar Sucursal");
+        model.addAttribute("paises", countryWorldList);
+        model.addAttribute("sucursal", sucursal);
+        return "/views/sucursales/add";
     }
 
-    @PostMapping("/update/{id}")
-    public ModelAndView updateSucursal(@Valid @ModelAttribute Sucursal sucursal,
-                 BindingResult result, @PathVariable("id") Integer sucursalId, Model model) {
-
-        if (result.hasErrors()) {
-            model.addAttribute("error", "Se necesitan todos los campos");
-            return new ModelAndView("views/sucursales/update", model.asMap());
-        } else {
-            sucursalService.updateSucursal(sucursal);
-            return new ModelAndView("redirect:/views/sucursales/list", model.asMap());
-        }
+    @GetMapping("/delete/{id}")
+    public String deleteSucursal(@PathVariable("id") Integer sucursalId, Model model) {
+        sucursalService.deleteSucursal(sucursalId);
+        return "redirect:/views/sucursales/";
     }
+
+
 
 
 

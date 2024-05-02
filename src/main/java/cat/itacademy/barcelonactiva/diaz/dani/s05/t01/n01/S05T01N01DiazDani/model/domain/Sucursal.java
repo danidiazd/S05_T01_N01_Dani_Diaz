@@ -15,11 +15,11 @@ public class Sucursal implements Serializable {
     private Integer pk_SucursalId;
 
     @Column(name = "name")
-    @NotEmpty(message = "Este campo no puede estar vacio.")
+    @NotEmpty
     private String nameSucursal;
 
     @Column(name = "country")
-    @NotEmpty(message = "Este campo no puede estar vacio.")
+    @NotEmpty
     private String nameCountry;
 
     public Sucursal(){}

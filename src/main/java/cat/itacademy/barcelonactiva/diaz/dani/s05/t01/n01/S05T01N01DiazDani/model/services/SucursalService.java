@@ -24,15 +24,15 @@ public class SucursalService implements ISucursalService {
 
     @Override
     public SucursalDTO updateSucursal(Sucursal sucursal) {
+        if (sucursal.getPk_SucursalId() == null) {
+            return addSucursal(sucursal);
+        } else {
         Optional<Sucursal> optionalSucursal = sucursalRepository.findById(sucursal.getPk_SucursalId());
-        if (optionalSucursal.isPresent()) {
             Sucursal updateSucursal = optionalSucursal.get();
             updateSucursal.setPk_SucursalId(sucursal.getPk_SucursalId());
             updateSucursal.setNameSucursal(sucursal.getNameSucursal());
             updateSucursal.setNameCountry(sucursal.getNameCountry());
             return convertToDTO(sucursalRepository.save(updateSucursal));
-        } else {
-            throw new RuntimeException("No encontrado con ID: " + sucursal.getPk_SucursalId());
         }
     }
 

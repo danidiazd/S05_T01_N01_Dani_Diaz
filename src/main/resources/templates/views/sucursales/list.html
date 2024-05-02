@@ -9,13 +9,18 @@
     <h1 th:text="${titulo}"></h1>
 </div>
 <div class="container">
+    <a class="btn btn-primary btn-sm"th:href="@{/views/sucursales/add}"
+    th:text="'Nueva Sucursal'" title="Crear nueva Sucursal"></a>
+
     <table class="table">
-        <thead>
+        <thead class="thread-dark">
         <tr>
             <th scope="col">#ID</th>
             <th scope="col">Nombre Sucursal</th>
             <th scope="col">Nombre Pais</th>
             <th scope="col">Tipo</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Eliminar</th>
         </tr>
         </thead>
         <tbody>
@@ -24,6 +29,16 @@
             <td th:text="${su.sucursalName}"></td>
             <td th:text="${su.countryName}"></td>
             <td th:text="${su.typeSucursal}"></td>
+            <td>
+                <a class="btn btn-success btn-sm"th:href="@{/views/sucursales/edit/} + ${su.pk_SucursalID}"
+                   th:text="'Editar'" title="Editar registro"></a>
+
+            </td>
+            <td>
+                <a class="btn btn-danger btn-sm"th:href="@{/views/sucursales/delete/} + ${su.pk_SucursalID}"
+                   th:text="'Eliminar'" title="Eliminar registro"></a>
+
+            </td>
 
         </tr>
         </tbody>
