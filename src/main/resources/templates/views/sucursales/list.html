@@ -9,8 +9,7 @@
     <h1 th:text="${titulo}"></h1>
 </div>
 <div class="container">
-    <a class="btn btn-primary btn-sm"th:href="@{/views/sucursales/add}"
-    th:text="'Nueva Sucursal'" title="Crear nueva Sucursal"></a>
+    <a class="btn btn-primary btn-sm" th:href="@{/views/sucursales/add}" th:text="'Nueva Sucursal'" title="Crear nueva Sucursal"></a>
 
     <table class="table">
         <thead class="thread-dark">
@@ -30,22 +29,18 @@
             <td th:text="${su.countryName}"></td>
             <td th:text="${su.typeSucursal}"></td>
             <td>
-                <a class="btn btn-success btn-sm"th:href="@{/views/sucursales/edit/} + ${su.pk_SucursalID}"
+                <a class="btn btn-success btn-sm" th:href="@{/views/sucursales/edit/} + ${su.pk_SucursalID}"
                    th:text="'Editar'" title="Editar registro"></a>
-
             </td>
             <td>
-                <a class="btn btn-danger btn-sm"th:href="@{/views/sucursales/delete/} + ${su.pk_SucursalID}"
-                   th:text="'Eliminar'" title="Eliminar registro"></a>
-
+                <a class="btn btn-danger btn-sm" th:href="@{/views/sucursales/delete/} + ${su.pk_SucursalID}"
+                   th:text="'Eliminar'" title="Eliminar registro"
+                   onclick="return confirm('¿Estás seguro de que deseas eliminar esta sucursal?');"></a>
             </td>
-
         </tr>
         </tbody>
     </table>
-
 </div>
 <footer th:replace="plantilla/template :: footer"></footer>
-
 </body>
 </html>

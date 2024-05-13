@@ -22,9 +22,7 @@ public class SucursalDTO {
         this.typeSucursal = checkCountry(countryName);
     }
 
-    public SucursalDTO() {
-
-    }
+    public SucursalDTO() {}
 
     public Integer getPk_SucursalID() {
         return pk_SucursalID;
@@ -58,7 +56,7 @@ public class SucursalDTO {
         this.typeSucursal = typeSucursal;
     }
 
-    public String checkCountry(String countryOffice) {
+    private String checkCountry(String countryOffice) {
         for (CountryEU country : CountryEU.values()) {
             if (countryOffice.equalsIgnoreCase(country.name())) {
                 return "EU";
